@@ -18,8 +18,8 @@ function readPointer(v: any): Uint8Array {
 }
 const opts = {
   name: "cpus",
-  url: (new URL("../target/release", import.meta.url)).toString(),
-  policy: undefined,
+  url: (new URL("../dist", import.meta.url)).toString(),
+  policy: CachePolicy.NONE,
 }
 const _lib = await prepare(opts, {
   sys_info: { parameters: [], result: "pointer", nonblocking: false },
@@ -29,30 +29,6 @@ export type SystemInfo = {
   mem: Memory
   disk: Array<Disks>
   process: Array<Process>
-}
-export type DiskUsage = {
-  writen: number
-  read: number
-  total_writen: number
-  total_read: number
-}
-export type Disks = {
-  mount_point: string
-  is_removable: boolean
-  total_space: number
-  available: number
-  filesystem: string
-  name: string
-  type_: string
-}
-export type Cpu = {
-  name: string
-  freq: number
-  usage: number
-  vendor_id: string
-  brand: string
-  available_core: number
-  total_core: number
 }
 export type Process = {
   pid: string
@@ -67,6 +43,30 @@ export type Process = {
   run_time: number
   cpu_usage: number
   disk_usage: DiskUsage
+}
+export type Cpu = {
+  name: string
+  freq: number
+  usage: number
+  vendor_id: string
+  brand: string
+  available_core: number
+  total_core: number
+}
+export type Disks = {
+  mount_point: string
+  is_removable: boolean
+  total_space: number
+  available: number
+  filesystem: string
+  name: string
+  type_: string
+}
+export type DiskUsage = {
+  writen: number
+  read: number
+  total_writen: number
+  total_read: number
 }
 export type Memory = {
   total: number
