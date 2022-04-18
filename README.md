@@ -11,7 +11,7 @@ Usage
 
 ```ts
 
-import { sys } from "https://deno.land/x/cpus/mod.ts";
+import { sys } from "https://deno.land/x/sys/mod.ts";
 
 sys();
 //
