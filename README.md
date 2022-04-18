@@ -1,16 +1,18 @@
-# CPUS
+# SYS
 
 
-This module was made in 10 minutes. 
+> This module was made in 10 minutes. 
 
-There  is nothing else except just the current CPU available and Physical CPU.
+Get all your system information in one function. 
+
+This is a Work in progress, anything can break at anytime, feel free to open an issue.
 
 Usage
 
 ```ts
 
-import { cpus } from "https://deno.land/x/cpus/mod.ts";
+import { sys } from "https://deno.land/x/cpus/mod.ts";
 
-cpus();
+sys();
 //
 ```
