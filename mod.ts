@@ -1,9 +1,6 @@
-import {get_available, get_phy} from "./bindings/bindings.ts";
+import {sys_info} from "./bindings/bindings.ts";
 
-
+//Might need to add more Typing in the future, for now this will do.
 export const cpus = () => {
-	return {
-		available: get_available(),
-		physical: get_phy()
-	}
+	return sys_info()
 }

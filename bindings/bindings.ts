@@ -18,21 +18,66 @@ function readPointer(v: any): Uint8Array {
 }
 const opts = {
   name: "cpus",
-  url: (new URL("../dist", import.meta.url)).toString(),
+  url: (new URL("../target/release", import.meta.url)).toString(),
   policy: undefined,
 }
 const _lib = await prepare(opts, {
-  get_available: { parameters: [], result: "i32", nonblocking: false },
-  get_phy: { parameters: [], result: "i32", nonblocking: false },
+  sys_info: { parameters: [], result: "pointer", nonblocking: false },
 })
-
-export function get_available() {
-  let rawResult = _lib.symbols.get_available()
-  const result = rawResult
-  return result
+export type SystemInfo = {
+  cpu: Array<Cpu>
+  mem: Memory
+  disk: Array<Disks>
+  process: Array<Process>
 }
-export function get_phy() {
-  let rawResult = _lib.symbols.get_phy()
-  const result = rawResult
-  return result
+export type DiskUsage = {
+  writen: number
+  read: number
+  total_writen: number
+  total_read: number
+}
+export type Disks = {
+  mount_point: string
+  is_removable: boolean
+  total_space: number
+  available: number
+  filesystem: string
+  name: string
+  type_: string
+}
+export type Cpu = {
+  name: string
+  freq: number
+  usage: number
+  vendor_id: string
+  brand: string
+  available_core: number
+  total_core: number
+}
+export type Process = {
+  pid: string
+  name: string
+  cmd: string
+  exe: string
+  environ: Array<string>
+  memory: number
+  virtual_memory: number
+  status: string
+  start_time: number
+  run_time: number
+  cpu_usage: number
+  disk_usage: DiskUsage
+}
+export type Memory = {
+  total: number
+  free: number
+  used: number
+  swap_used: number
+  swap_free: number
+  swap_total: number
+}
+export function sys_info() {
+  let rawResult = _lib.symbols.sys_info()
+  const result = readPointer(rawResult)
+  return JSON.parse(decode(result)) as SystemInfo
 }
